@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		
+		<style type="text/css">
+			h1,h2{
+				text-align: center;
+			}
+			
+			div{
+				text-align: center;
+			}
+			
+			.rate{
+				width: 60px;
+			}
+			
+			.list{
+				width: 60px;
+			}
+		</style>
+		
+		
+		<script type="text/javascript">
+			function test(){
+				var index1=document.getElementById("cp1").selectedIndex;//获取当前选择项的索引.
+				var cp1 = document.getElementById("cp1").options[index1].value;
+				var index2=document.getElementById("cp2").selectedIndex;//获取当前选择项的索引.
+				var cp2 = document.getElementById("cp2").options[index2].value;
+				console.log(cp1+" vs "+cp2);
+				
+				var scoreIndex1=document.getElementById("score1").selectedIndex;//获取当前选择项的索引.
+				var score1 = document.getElementById("score1").options[scoreIndex1].value;
+				var scoreIndex2=document.getElementById("score2").selectedIndex;//获取当前选择项的索引.
+				var score2 = document.getElementById("score2").options[scoreIndex2].value;
+				console.log(cp1+" "+score1+" "+cp2);
+				console.log(cp1+" "+score2+" "+cp2);
+				
+				var rate1 = document.getElementById("rate1").value;
+				var rate2 = document.getElementById("rate2").value;
+				/*
+				if(rate1 == ""){
+					alert("none");
+				}else{
+					alert(rate1);
+				}*/
+				
+				var index3=document.getElementById("preference").selectedIndex;//获取当前选择项的索引.
+				var preference = document.getElementById("preference").options[index3].value;
+				//alert("看好比分:"+preference);
+				
+				var coin = document.getElementById("coin").value;
+				
+				if(score1 == preference){
+					var mainScore = score1;
+					var viceScore = score2;
+					var mainRate = rate1;
+					var viceRate = rate2;
+				}else{
+					var mainScore = score2;
+					var viceScore = score1;
+					var mainRate = rate2;
+					var viceRate = rate1;
+				}
+				
+				for(var i =0;i<=coin;i++){
+					if(viceRate * i >= coin){
+						var viceGuessCoin = i;
+						var mainGuessCoin = coin - i;
+						var viceWinCoins = viceRate * i;
+						var mainWinCoins = mainRate * (coin-i);
+						break;
+					}
+				}
+				
+				/*alert("看好比分:"+preference+"\n"
+				+cp1+" "+mainScore+" "+cp2+": "+"押"+mainGuessCoin+"币，可获得:"+mainWinCoins.toFixed(2)+"币,净赚:"+(mainWinCoins-coin).toFixed(2)+"币\n"
+				+cp1+" "+viceScore+" "+cp2+": "+"押"+viceGuessCoin+"币，可获得:"+viceWinCoins.toFixed(2)+"币,净赚:"+(viceWinCoins-coin).toFixed(2)+"币\n")
+				*/
+				var str = "看好比分:"+preference+"\n"
+				+cp1+" "+mainScore+" "+cp2+": "+"押"+mainGuessCoin+"币，可获得:"+mainWinCoins.toFixed(2)+"币,净赚:"+(mainWinCoins-coin).toFixed(2)+"币\n"
+				+cp1+" "+viceScore+" "+cp2+": "+"押"+viceGuessCoin+"币，可获得:"+viceWinCoins.toFixed(2)+"币,净赚:"+(viceWinCoins-coin).toFixed(2)+"币\n";
+				var res = document.getElementById("res");
+				res.innerText= str;
+			}
+			
+			function score1change(){
+				//alert("aa");
+				var scoreIndex1=document.getElementById("score1").selectedIndex;//获取当前选择项的索引.
+				var score1 = document.getElementById("score1").options[scoreIndex1].value;
+				var res = document.getElementById("score1rate");
+				res.innerText= score1+"赔率:";
+			}
+			
+			function score2change(){
+				//alert("aa");
+				var scoreIndex2=document.getElementById("score2").selectedIndex;//获取当前选择项的索引.
+				var score2 = document.getElementById("score2").options[scoreIndex2].value;
+				var res = document.getElementById("score2rate");
+				res.innerText= score2+"赔率:";
+			}
+
+			
+		</script>
+	</head>
+	<body>
+		<div>
+			<h1>赛事竞猜</h1>
+				<label>战队1:</label>
+				<select name="competor1" id="cp1" class="list">
+					<option value="Ep">Ep</option>
+					<option value="Estar">Estar</option>
+					<option value="Kz">Kz</option>
+					<option value="LGD">LGD</option>
+					<option value="Edg">Edg</option>
+					<option value="Xrock">Xrock</option>
+					<option value="BS">BS</option>
+					<option value="Q9">Q9</option>
+					<option value="AG">AG</option>
+					<option value="We">We</option>
+					<option value="None" selected></option>
+				</select>
+				<span>     </span>
+				<label>战队2:</label>
+				<select name="competor2" id="cp2" class="list">
+					<option value="Ep">Ep</option>
+					<option value="Estar">Estar</option>
+					<option value="Kz">Kz</option>
+					<option value="LGD">LGD</option>
+					<option value="Edg">Edg</option>
+					<option value="Xrock">Xrock</option>
+					<option value="BS">BS</option>
+					<option value="Q9">Q9</option>
+					<option value="AG">AG</option>
+					<option value="We">We</option>
+					<option value="None" selected></option>
+				</select>
+				<br>
+				<label>比分1:</label>
+				<select id="score1" onchange="score1change()" class="list">
+					<option value="3:0">3:0</option>
+					<option value="3:1">3:1</option>
+					<option value="3:2">3:2</option>
+					<option value="2:3">2:3</option>
+					<option value="1:3">1:3</option>
+					<option value="0:3">0:3</option>
+					<option value="2:1">2:1</option>
+					<option value="2:0">2:0</option>
+					<option value="0:2">0:2</option>
+					<option value="1:2">1:2</option>
+					<option value="None" selected></option>
+				</select>
+				<label >比分2:</label>
+				<select id="score2"  onchange="score2change()" class="list">
+					<option value="3:0">3:0</option>
+					<option value="3:1">3:1</option>
+					<option value="3:2">3:2</option>
+					<option value="2:3">2:3</option>
+					<option value="1:3">1:3</option>
+					<option value="0:3">0:3</option>
+					<option value="2:1">2:1</option>
+					<option value="2:0">2:0</option>
+					<option value="0:2">0:2</option>
+					<option value="1:2">1:2</option>
+					<option value="None" selected></option>
+				</select>
+				
+				<br>
+				<label id="score1rate">比分1赔率:</label>
+				<input type="number" id="rate1" class="rate">
+				<label id="score2rate">比分2赔率:</label>
+				<input type="number" id="rate2" class="rate">
+				<br>
+				<label>看好比分:</label>
+				<select id="preference" class="list">
+					<option value="3:0">3:0</option>
+					<option value="3:1">3:1</option>
+					<option value="3:2">3:2</option>
+					<option value="2:3">2:3</option>
+					<option value="1:3">1:3</option>
+					<option value="0:3">0:3</option>
+					<option value="2:1">2:1</option>
+					<option value="2:0">2:0</option>
+					<option value="0:2">0:2</option>
+					<option value="1:2">1:2</option>
+					<option value="None" selected></option>
+				</select>
+				<br>
+				<label>赏金币数量:</label>
+				<input type="number" id="coin" style="width: 80px;">
+				<br>
+				<button style="display:block;margin:0 auto" onclick="test()">计算</button>
+				
+				<div>
+					<p id="res"></p>
+				</div>
+		</div>
+			</body>
+</html>
