@@ -65,8 +65,10 @@
 					var viceRate = rate1;
 				}
 				
+				var loseRate = document.getElementById("lose").value * 0.01;
+				
 				for(var i =0;i<=coin;i++){
-					if(viceRate * i >= coin){
+					if(viceRate * i >= coin * (1-loseRate)){
 						var viceGuessCoin = i;
 						var mainGuessCoin = coin - i;
 						var viceWinCoins = viceRate * i;
@@ -80,8 +82,8 @@
 				+cp1+" "+viceScore+" "+cp2+": "+"押"+viceGuessCoin+"币，可获得:"+viceWinCoins.toFixed(2)+"币,净赚:"+(viceWinCoins-coin).toFixed(2)+"币\n")
 				*/
 				var str = "看好比分:"+preference+"\n"
-				+cp1+" "+mainScore+" "+cp2+": "+"押"+mainGuessCoin+"币，可获得:"+mainWinCoins.toFixed(2)+"币,净赚:"+(mainWinCoins-coin).toFixed(2)+"币\n"
-				+cp1+" "+viceScore+" "+cp2+": "+"押"+viceGuessCoin+"币，可获得:"+viceWinCoins.toFixed(2)+"币,净赚:"+(viceWinCoins-coin).toFixed(2)+"币\n";
+				+cp1+" "+mainScore+" "+cp2+": "+"押"+mainGuessCoin+"币，可获得:"+mainWinCoins.toFixed(2)+"币,纯收益:"+(mainWinCoins-coin).toFixed(2)+"币\n"
+				+cp1+" "+viceScore+" "+cp2+": "+"押"+viceGuessCoin+"币，可获得:"+viceWinCoins.toFixed(2)+"币,纯收益:"+(viceWinCoins-coin).toFixed(2)+"币\n";
 				var res = document.getElementById("res");
 				res.innerText= str;
 			}
@@ -220,6 +222,9 @@
 				<br>
 				<label>赏金币数量:</label>
 				<input type="number" id="coin" style="width: 80px;">
+				<br>
+				<label>可接受损失:</label>
+				<input type="number" id="lose" style="width: 40px;"><label>%</label>
 				<br>
 				<button style="display:block;margin:0 auto" onclick="test()">计算</button>
 				
